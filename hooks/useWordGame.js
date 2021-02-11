@@ -1,10 +1,7 @@
 import { useState, useEffect, useRef } from "react"
 
-
 function useWordGame(startingTime = 10) {
     const WORD_COUNT = 0
-
-
     const [text, setText] = useState("");
     const [timeRemaining, setTimeRemaining] = useState(startingTime);
     const [isRunning, setIsRunning] = useState(false);
@@ -54,11 +51,8 @@ function useWordGame(startingTime = 10) {
 
     }, [timeRemaining, isRunning])
 
-
     return { textAreaRef, isRunning, changeHandler, text, timeRemaining, startGame, wordCount }
 
 }
-
-
 
 export default useWordGame
