@@ -1,1 +1,5 @@
-# React-Typing-Game (Will upload a newer version soon)
+# React-Typing-Game 
+
+
+
+(Will upload a newer version soon)
