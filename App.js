@@ -3,7 +3,6 @@ import useWordGame from "./hooks/useWordGame"
 import "./styles.css"
 
 function App() {
-
     const {
         textAreaRef,
         isRunning,
