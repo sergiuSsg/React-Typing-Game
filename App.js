@@ -1,23 +1,16 @@
 import React from "react"
 import { useState, useEffect, useRef } from "react"
 import BottomBar from "./components/BottomBar";
-import TextArea from "./components/TextArea"
-import TopBar from "./components/TopBar"
 import HighScores from "./components/HighScores";
+import TopBar from "./components/TopBar";
 import "./styles.css"
 
-
 function App() {
+    const START_TIME = 10;
 
-    const localData = localStorage.getItem('arrayTest') 
-
+    const localData = localStorage.getItem('scoreArray') 
     const parsedLocalData = localData ? JSON.parse(localData) : []
-
-
     const [scoreArray, setScoreArray] = useState(parsedLocalData) 
-
-
-    const START_TIME = 5;
     const [text, setText] = useState("");
     const [timeRemaining, setTimeRemaining] = useState(null);
     const [isRunning, setIsRunning] = useState(false);    
@@ -29,10 +22,6 @@ function App() {
         setScoreArray((oldScoreArray) => [...oldScoreArray, wordCount])
         setUpdateScore(false)
     }
-
-    useEffect(() => {
-        localStorage.setItem('arrayTest', JSON.stringify(scoreArray))
-    }, [scoreArray])
 
     function changeHandler(event) {
         const { value } = event.target
@@ -53,6 +42,16 @@ function App() {
         textAreaRef.current.focus()
     }
 
+    function endGame() {
+        setIsRunning(false)
+        setWordCount(wordCounter(text))
+        setUpdateScore(true)
+    }
+
+    useEffect(() => {
+        localStorage.setItem('scoreArray', JSON.stringify(scoreArray))
+    }, [scoreArray])
+
     useEffect(() => {
         if (isRunning && timeRemaining > 0) {
             const time = setTimeout(() => {
@@ -62,23 +61,21 @@ function App() {
                 clearTimeout(time);
             }
         }  else if (timeRemaining === 0) {
-            setIsRunning(false)
-            setWordCount(wordCounter(text))
-            setUpdateScore(true)
+            endGame()
         }
     }, [timeRemaining])
 
     return (
         <div>
-            <TopBar />
-            <TextArea textAreaRef={textAreaRef} isRunning={isRunning} changeHandler={changeHandler} text={text}/>
+            <TopBar startTime={START_TIME}/>
+            <textarea ref={textAreaRef} disabled={!isRunning} onChange={changeHandler} value={text} />
             <BottomBar 
                 startGame={startGame} 
+                setScoreArray={setScoreArray}
+                startTime={START_TIME}
                 timeRemaining={timeRemaining} 
                 isRunning={isRunning} 
                 wordCount={wordCount} 
-                startTime={START_TIME}
-                setScoreArray={setScoreArray}
             />
             <HighScores scoreArray={scoreArray}/>
         </div>
