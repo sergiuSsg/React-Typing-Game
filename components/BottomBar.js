@@ -1,19 +1,19 @@
 import React from "react"
 
-function BottomBar({startGame, timeRemaining, isRunning, wordCount, startTime, setScoreArray}) {
+function BottomBar({startGame, setScoreArray, startTime, timeRemaining, isRunning, wordCount}) {
 
     return(
         <div>
-            <h4>Time Remaining: {timeRemaining ? timeRemaining : "Time's up!"}</h4>
+            <h3>Time Remaining: {timeRemaining ? timeRemaining : "Time's up!"}</h3>
             <button disabled={isRunning} onClick={startGame}>Start Game</button>
             <br />
-            <button onClick={() => setScoreArray([])} >Reset Score</button>
-            <h1>
+            <button disabled={isRunning} onClick={() => setScoreArray([])} >Reset Score</button>
+            <h3>
                 {
                     !wordCount ? `Word Count: -` :
                     `Word Count: ${wordCount} words in ${startTime} seconds!`
                 }
-            </h1>
+            </h3>
         </div>
     )
 }
