@@ -1,13 +1,12 @@
 import React from "react"
 import { useState, useEffect, useRef } from "react"
+import TopBar from "./components/TopBar";
 import BottomBar from "./components/BottomBar";
 import HighScores from "./components/HighScores";
-import TopBar from "./components/TopBar";
 import "./styles.css"
 
 function App() {
     const START_TIME = 10;
-
     const localData = localStorage.getItem('scoreArray') 
     const parsedLocalData = localData ? JSON.parse(localData) : []
     const [scoreArray, setScoreArray] = useState(parsedLocalData) 
@@ -54,11 +53,11 @@ function App() {
 
     useEffect(() => {
         if (isRunning && timeRemaining > 0) {
-            const time = setTimeout(() => {
+            const timer = setTimeout(() => {
                 setTimeRemaining(prevTime => prevTime - 1)
             }, 1000)
             return () => {
-                clearTimeout(time);
+                clearTimeout(timer);
             }
         }  else if (timeRemaining === 0) {
             endGame()
