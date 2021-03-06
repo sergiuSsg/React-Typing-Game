@@ -1,4 +1,4 @@
-# React-Typing-Game 
+Typing Game 
 
 
 How many words can you type in 10 seconds?
